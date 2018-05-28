@@ -1,0 +1,362 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Companies REST API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/companies": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Get all companies",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Dykyi": []
+          }
+        ]
+      }
+    },
+    "/company/{id}": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Get company by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found Company by ID"
+          }
+        },
+        "security": [
+          {
+            "Dykyi": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Update a new company",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found Company by ID"
+          }
+        },
+        "security": [
+          {
+            "Dykyi": []
+          }
+        ]
+      }
+    },
+    "/company": {
+      "post": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Create a new company",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Create a new company"
+          }
+        },
+        "security": [
+          {
+            "Dykyi": []
+          }
+        ]
+      }
+    },
+    "/file/{id}": {
+      "delete": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Delete company by ID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found Company by ID"
+          },
+          "500": {
+            "description": "You can not delete this company, because in company have a employee"
+          }
+        },
+        "security": [
+          {
+            "Dykyi": []
+          }
+        ]
+      }
+    },
+    "/api/company/{companyId}/employee/{employeeId}/dependants": {
+      "get": {
+        "tags": [
+          "Dependant"
+        ],
+        "summary": "Get all dependants from employee",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Dykyi": []
+          }
+        ]
+      }
+    },
+    "/api/company/{companyId}/employee/{employeeId}/dependant": {
+      "post": {
+        "tags": [
+          "Dependant"
+        ],
+        "summary": "Create a new dependant",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "gender": {
+                  "type": "boolean"
+                },
+                "birthday": {
+                  "type": "datetime"
+                },
+                "salary": {
+                  "type": "float"
+                },
+                "notes": {
+                  "type": "string"
+                },
+                "dependant_id": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Create a new dependant"
+          }
+        },
+        "security": [
+          {
+            "Dykyi": []
+          }
+        ]
+      }
+    },
+    "/api/company/{companyId}/employee/{employeeId}/dependant/{id}": {
+      "put": {
+        "tags": [
+          "Dependant"
+        ],
+        "summary": "Update a dependant",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found Dependant by ID"
+          }
+        },
+        "security": [
+          {
+            "Dykyi": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Dependant"
+        ],
+        "summary": "Delete dependant by ID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found Dependant by ID"
+          }
+        },
+        "security": [
+          {
+            "Dykyi": []
+          }
+        ]
+      }
+    },
+    "/api/company/{companyId}/employers": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Get all employers by company",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Dykyi": []
+          }
+        ]
+      }
+    },
+    "/api/company/{companyId}/employee/{id}": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Get employee by id from company",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found Employee by ID"
+          }
+        },
+        "security": [
+          {
+            "Dykyi": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Update a employee",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found Employee by ID"
+          }
+        },
+        "security": [
+          {
+            "Dykyi": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Delete employee by ID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found Employee by ID"
+          },
+          "500": {
+            "description": "You can not delete this employee, because in employee have a dependants"
+          }
+        },
+        "security": [
+          {
+            "Dykyi": []
+          }
+        ]
+      }
+    },
+    "/api/company/{companyId}/employee": {
+      "post": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Create a new employee",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "gender": {
+                  "type": "boolean"
+                },
+                "birthday": {
+                  "type": "datetime"
+                },
+                "salary": {
+                  "type": "float"
+                },
+                "notes": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Create a new employee"
+          }
+        },
+        "security": [
+          {
+            "Dykyi": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {}
+}
