@@ -14,7 +14,7 @@ use FOS\RestBundle\Controller\Annotations as FOSRest;
  * @SWG\Info(title="Companies REST API", version="1.0")
  *
  * @SWG\Get(
- *     path="/companies",
+ *     path="/api/companies",
  *     summary="Get all companies",
  *     @SWG\Response(response="200", description="OK"),
  *     tags={"Company"},
@@ -22,7 +22,7 @@ use FOS\RestBundle\Controller\Annotations as FOSRest;
  * )
  *
  * @SWG\Get(
- *     path="/company/{id}",
+ *     path="/api/company/{id}",
  *     summary="Get company by id",
  *     @SWG\Response(response="200", description="OK"),
  *     @SWG\Response(response="404", description="Not found Company by ID"),
@@ -31,7 +31,7 @@ use FOS\RestBundle\Controller\Annotations as FOSRest;
  * )
  *
  * @SWG\Post(
- *     path="/company",
+ *     path="api//company",
  *     summary="Create a new company",
  *     @SWG\Parameter(
  *          name="body",
@@ -54,7 +54,7 @@ use FOS\RestBundle\Controller\Annotations as FOSRest;
  * )
  *
  * @SWG\Put(
- *     path="/company/{id}",
+ *     path="api/company/{id}",
  *     summary="Update a new company",
  *
  *     @SWG\Response(response="200", description="OK"),
@@ -64,7 +64,7 @@ use FOS\RestBundle\Controller\Annotations as FOSRest;
  * )
  *
  * @SWG\Delete(
- *     path="/file/{id}",
+ *     path="api/company/{id}",
  *     summary="Delete company by ID",
  *     @SWG\Response(response="200", description="OK"),
  *     @SWG\Response(response="404", description="Not found Company by ID"),
