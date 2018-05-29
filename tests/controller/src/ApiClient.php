@@ -4,6 +4,7 @@ namespace App\Tests\controller\src;
 
 use App\Tests\controller\src\Exception\TransferException;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -12,6 +13,8 @@ use Psr\Http\Message\RequestInterface;
  */
 class ApiClient
 {
+    private $url;
+
     private $options = [];
 
     /**
@@ -23,8 +26,9 @@ class ApiClient
      */
     protected $client = null;
 
-    public function __construct(ClientInterface $client, ResponseDataExtractor $extractor)
+    public function __construct(ClientInterface $client, ResponseDataExtractor $extractor, string $url)
     {
+        $this->url = $url;
         $this->client = $client;
         $this->extractor = $extractor;
 
@@ -36,11 +40,11 @@ class ApiClient
      */
     private function setDefaultOptions()
     {
+
         // set default options
         $this->options = [
             'verify' => false,
-//            'base_uri'    => getenv('FILE_API'),
-            'base_uri' => 'http://rest-api.loc:81/api/',
+            'base_uri' => $this->url,
             'http_errors' => false,
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -55,14 +59,16 @@ class ApiClient
      */
     public function send(RequestInterface $request, $options = [])
     {
-        $options = empty($options) ? $this->options : $options;
         try {
-            $response = $this->client->send($request, $options);
+            $response = $this->client->send($request, array_merge($this->options, $options));
         } catch (TransferException $e) {
             $message = sprintf('Something went wrong when calling vault (%s).', $e->getMessage());
             dump($message);
-        } catch (\Exception $e) {
-            dump($e->getMessage());
+            die();
+        } catch (ClientException $e) {
+            $response = $e->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            dump($responseBodyAsString);
             die();
         }
 

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\DTO\CompanyDTO;
 use App\Entity\Company;
 use App\Exception\RepositoryDataNotFoundException;
+use App\Repository\Company\getAllCompanies;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -109,6 +110,7 @@ class CompanyController extends CommonController
     public function readsAction(): JsonResponse
     {
         $data = $this->getCompanyRepository()->getAll();
+
         return JsonResponse::create(['data' => $data]);
     }
 

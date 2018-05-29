@@ -22,8 +22,7 @@ class ResponseDataExtractor implements ResponseDataInterface
         $responseBody = $response->getBody()->getContents();
         $rawDecoded = json_decode($responseBody);
         if ($rawDecoded === null) {
-            $oneLineResponseBody = str_replace("\n", '\n', $responseBody);
-            throw new ClientException(sprintf("Can't decode response: %s", $oneLineResponseBody));
+            throw new ClientException(sprintf("Can't decode response"));
         }
         return $rawDecoded;
     }
