@@ -32,7 +32,7 @@ use FOS\RestBundle\Controller\Annotations as FOSRest;
  * )
  *
  * @SWG\Post(
- *     path="api//company",
+ *     path="/api/company",
  *     summary="Create a new company",
  *     @SWG\Parameter(
  *          name="body",
@@ -55,7 +55,7 @@ use FOS\RestBundle\Controller\Annotations as FOSRest;
  * )
  *
  * @SWG\Put(
- *     path="api/company/{id}",
+ *     path="/api/company/{id}",
  *     summary="Update a new company",
  *
  *     @SWG\Response(response="200", description="OK"),
@@ -65,7 +65,7 @@ use FOS\RestBundle\Controller\Annotations as FOSRest;
  * )
  *
  * @SWG\Delete(
- *     path="api/company/{id}",
+ *     path="/api/company/{id}",
  *     summary="Delete company by ID",
  *     @SWG\Response(response="200", description="OK"),
  *     @SWG\Response(response="404", description="Not found Company by ID"),
@@ -143,7 +143,7 @@ class CompanyController extends CommonController
     {
         /** @var Company $company */
         $company = $this->getCompanyRepository()->getOneById($id);
-        $this->saveCompany($company, $request->request->all());
+        $this->saveCompany($company, $request->request->all(), false);
 
         return JsonResponse::create(['data' => CompanyDTO::serialize($company)]);
     }

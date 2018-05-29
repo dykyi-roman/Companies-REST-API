@@ -37,18 +37,18 @@ abstract class CommonController extends Controller
         return $this->getCompanyRepository()->getOneById($companyId);
     }
 
-    protected function saveEmployee(Employee $employee, array $data)
+    protected function saveEmployee(Employee $employee, array $data, $persist = true)
     {
         $form = $this->createForm(EmployeeType::class, $employee);
         $form->submit($data);
-        $this->getEmployeeRepository()->save($employee);
+        $this->getEmployeeRepository()->save($employee, $persist);
     }
 
-    protected function saveCompany(Company $company, array $data)
+    protected function saveCompany(Company $company, array $data, $persist = true)
     {
         $form = $this->createForm(CompanyType::class, $company);
         $form->submit($data);
-        $this->getCompanyRepository()->save($company);
+        $this->getCompanyRepository()->save($company, $persist);
     }
 
 }

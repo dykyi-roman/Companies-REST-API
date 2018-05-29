@@ -42,44 +42,7 @@
                         "Dykyi": []
                     }
                 ]
-            }
-        },
-        "api//company": {
-            "post": {
-                "tags": [
-                    "Company"
-                ],
-                "summary": "Create a new company",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "properties": {
-                                "name": {
-                                    "type": "string"
-                                },
-                                "address": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Create a new company"
-                    }
-                },
-                "security": [
-                    {
-                        "Dykyi": []
-                    }
-                ]
-            }
-        },
-        "api/company/{id}": {
+            },
             "put": {
                 "tags": [
                     "Company"
@@ -113,6 +76,41 @@
                     },
                     "500": {
                         "description": "You can not delete this company, because in company have a employee"
+                    }
+                },
+                "security": [
+                    {
+                        "Dykyi": []
+                    }
+                ]
+            }
+        },
+        "/api/company": {
+            "post": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "Create a new company",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "address": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create a new company"
                     }
                 },
                 "security": [

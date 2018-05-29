@@ -10,9 +10,10 @@ interface RepositoryInterface
 {
     /**
      * @param $entity
+     * @param boolean $persist
      * @return mixed
      */
-    public function save($entity);
+    public function save($entity, $persist);
 
     /**
      * @param int $id

@@ -141,7 +141,7 @@ class DependantController extends CommonController
         $dependant = $this->getEmployeeRepository()->getOneByCompanyId($companyId, $id);
 
         if ($dependant->getDependant() == $employeeId) {
-            $this->saveEmployee($dependant, $request->request->all());
+            $this->saveEmployee($dependant, $request->request->all(), false);
             return JsonResponse::create(['data' => EmployeeDTO::serialize($dependant)]);
         }
 

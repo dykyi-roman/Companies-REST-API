@@ -160,7 +160,7 @@ class EmployeeController extends CommonController
     public function updateAction(Request $request, int $companyId, int $id = 0): JsonResponse
     {
         $employee = $this->getEmployeeRepository()->getOneByCompanyId($companyId, $id);
-        $this->saveEmployee($employee, $request->request->all());
+        $this->saveEmployee($employee, $request->request->all(), false);
 
         return JsonResponse::create(['data' => EmployeeDTO::serialize($employee)]);
     }

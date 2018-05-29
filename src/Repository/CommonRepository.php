@@ -13,11 +13,14 @@ abstract class CommonRepository extends EntityRepository
 {
     /**
      * @param $entity
+     * @param bool $persist
      */
-    public function save($entity): void
+    public function save($entity, $persist = true): void
     {
         $em = $this->getEntityManager();
-        $em->persist($entity);
+        if ($persist) {
+            $em->persist($entity);
+        }
         $em->flush();
     }
 
@@ -40,8 +43,7 @@ abstract class CommonRepository extends EntityRepository
      */
     protected function assertEntity($entity, int $id): void
     {
-        if ($entity === null || empty($entity))
-        {
+        if ($entity === null || empty($entity)) {
             $message = sprintf((static::class)::ERROR_MESSAGE, 'by ID ' . $id);
             throw new RepositoryDataNotFoundException($message, 404);
         }
@@ -52,8 +54,7 @@ abstract class CommonRepository extends EntityRepository
      */
     protected function assertEntices($entity): void
     {
-        if (empty($entity))
-        {
+        if (empty($entity)) {
             $message = sprintf((static::class)::ERROR_MESSAGE, '');
             throw new RepositoryDataNotFoundException($message, 404);
         }
