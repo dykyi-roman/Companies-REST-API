@@ -15,12 +15,17 @@ use Symfony\Component\Dotenv\Dotenv;
  */
 class EmployeeTest extends TestCase
 {
+    /** @var ApiClient  */
     private $client;
-    private $company;
-    private $employee;
 
     /** @var \Faker\Generator */
     private $faker;
+
+    /** @var ResponseDataExtractor  */
+    private $extractor;
+
+    private $company;
+    private $employee;
 
     public function __construct()
     {
@@ -28,37 +33,43 @@ class EmployeeTest extends TestCase
         $this->faker = Factory::create();
         (new Dotenv())->load(__DIR__ . '/../../.env');
 
-        $this->client = new ApiClient(new GuzzleClient, new ResponseDataExtractor(), getenv('API_URL'));
+        $this->client = new ApiClient(new GuzzleClient, getenv('API_URL'));
+        $this->extractor = new ResponseDataExtractor();
     }
 
     public function setUp()
     {
         $this->company = $this->createCompany();
-        $this->employee = $this->createEmployee($this->company->id);
+        $this->employee = $this->createEmployee($this->company['id']);
     }
 
     public function testCreateEmployee()
     {
-        $this->assertEquals(true, is_int($this->employee->id));
+        $this->assertEquals(true, is_int($this->employee['id']));
     }
 
     public function testGetEmployees()
     {
-        $response = $this->client->send(new Request('GET', sprintf('company/%s/employers', $this->company->id)));
-        $this->assertTrue(true, is_array($response));
+        $response = $this->client->send(new Request('GET', sprintf('company/%s/employers', $this->company['id'])));
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertArrayHasKey('employers', $this->extractor->extract($response));
     }
 
     public function testGetEmployee()
     {
-        $url = sprintf('company/%s/employee/%s', $this->company->id, $this->employee->id);
+        $url = sprintf('company/%s/employee/%s', $this->company['id'], $this->employee['id']);
         $request = new Request('GET', $url);
         $response = $this->client->send($request);
-        $this->assertTrue(true, array_key_exists('data', $response));
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $data = $this->extractor->extract($response);
+        $this->assertArrayHasKey('employee', $data);
+        $this->assertEquals(6, count($data['employee']));
     }
 
     public function testUpdateEmployee()
     {
-        $url = sprintf('company/%s/employee/%s', $this->company->id, $this->employee->id);
+        $url = sprintf('company/%s/employee/%s', $this->company['id'], $this->employee['id']);
         $request = new Request('PUT', $url, [],
             json_encode([
                 'name' => $this->faker->firstName,
@@ -70,16 +81,20 @@ class EmployeeTest extends TestCase
             ])
         );
         $response = $this->client->send($request);
-        $this->assertTrue(true, array_key_exists('data', $response));
+        $this->assertEquals(201, $response->getStatusCode());
+
+        $data = $this->extractor->extract($response);
+        $this->assertArrayHasKey('employee', $data);
+        $this->assertEquals(6, count($data['employee']));
     }
 
     public function testDeleteCompany()
     {
-        $url = sprintf('company/%s/employee/%s', $this->company->id, $this->employee->id);
+        $url = sprintf('company/%s/employee/%s', $this->company['id'], $this->employee['id']);
         $request = new Request('DELETE', $url);
         $response = $this->client->send($request);
 
-        $this->assertTrue(true, array_key_exists('deleted', $response));
+        $this->assertArrayHasKey('deleted', $this->extractor->extract($response));
     }
 
     private function createEmployee(int $companyId)
@@ -94,8 +109,9 @@ class EmployeeTest extends TestCase
                 'birthday' => '2000-03-03',
             ])
         );
+        $response = $this->client->send($request);
 
-        return $this->client->send($request);
+        return $this->extractor->extract($response);
     }
 
     private function createCompany()
@@ -105,7 +121,8 @@ class EmployeeTest extends TestCase
                 'address' => $this->faker->address
             ])
         );
+        $response = $this->client->send($request);
 
-        return $this->client->send($request);
+        return $this->extractor->extract($response);
     }
 }

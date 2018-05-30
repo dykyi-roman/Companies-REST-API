@@ -15,12 +15,12 @@ class ResponseDataExtractor implements ResponseDataInterface
      *
      * @throws \RuntimeException
      *
-     * @return object
+     * @return array
      */
-    public function extract(ResponseInterface $response)
+    public function extract(ResponseInterface $response): array
     {
-        $responseBody = $response->getBody()->getContents();
-        $rawDecoded = json_decode($responseBody);
+        $responseBody = $response->getBody(true);
+        $rawDecoded = json_decode($responseBody, true);
         if ($rawDecoded === null) {
             throw new ClientException(sprintf("Can't decode response"));
         }

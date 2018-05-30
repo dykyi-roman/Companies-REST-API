@@ -109,9 +109,9 @@ class CompanyController extends CommonController
      */
     public function readsAction(): JsonResponse
     {
-        $data = $this->getCompanyRepository()->getAll();
+        $companies = $this->getCompanyRepository()->getAll();
 
-        return JsonResponse::create(['data' => $data]);
+        return JsonResponse::create(['companies' => $companies]);
     }
 
     /**
@@ -126,7 +126,7 @@ class CompanyController extends CommonController
     {
         $data = $this->getCompanyRepository()->getOneById($id);
 
-        return JsonResponse::create(['data' => CompanyDTO::serialize($data)]);
+        return JsonResponse::create(['company' => CompanyDTO::serialize($data)]);
     }
 
 
@@ -145,7 +145,7 @@ class CompanyController extends CommonController
         $company = $this->getCompanyRepository()->getOneById($id);
         $this->saveCompany($company, $request->request->all(), false);
 
-        return JsonResponse::create(['data' => CompanyDTO::serialize($company)]);
+        return JsonResponse::create(['company' => CompanyDTO::serialize($company)], 201);
     }
 
     /**

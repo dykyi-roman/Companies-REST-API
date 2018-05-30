@@ -128,7 +128,7 @@ class EmployeeController extends CommonController
     {
         $data = $this->getEmployeeRepository()->getAllByCompanyId($companyId);
 
-        return JsonResponse::create(['data' => EmployeeDTO::serializes($data)]);
+        return JsonResponse::create(['employers' => EmployeeDTO::serializes($data)]);
     }
 
     /**
@@ -144,7 +144,7 @@ class EmployeeController extends CommonController
     {
         $data = $this->getEmployeeRepository()->getOneByCompanyId($companyId, $id);
 
-        return JsonResponse::create(['data' => EmployeeDTO::serialize($data)]);
+        return JsonResponse::create(['employee' => EmployeeDTO::serialize($data)]);
     }
 
     /**
@@ -162,7 +162,7 @@ class EmployeeController extends CommonController
         $employee = $this->getEmployeeRepository()->getOneByCompanyId($companyId, $id);
         $this->saveEmployee($employee, $request->request->all(), false);
 
-        return JsonResponse::create(['data' => EmployeeDTO::serialize($employee)]);
+        return JsonResponse::create(['employee' => EmployeeDTO::serialize($employee)], 201);
     }
 
     /**

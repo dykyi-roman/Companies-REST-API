@@ -6,6 +6,7 @@ use App\Tests\controller\src\Exception\TransferException;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class ApiClient
@@ -26,11 +27,10 @@ class ApiClient
      */
     protected $client = null;
 
-    public function __construct(ClientInterface $client, ResponseDataExtractor $extractor, string $url)
+    public function __construct(ClientInterface $client, string $url)
     {
         $this->url = $url;
         $this->client = $client;
-        $this->extractor = $extractor;
 
         $this->setDefaultOptions();
     }
@@ -57,7 +57,7 @@ class ApiClient
      * @param array $options
      * @return object
      */
-    public function send(RequestInterface $request, $options = [])
+    public function send(RequestInterface $request, $options = []): ResponseInterface
     {
         try {
             $response = $this->client->send($request, array_merge($this->options, $options));
@@ -72,7 +72,7 @@ class ApiClient
             die();
         }
 
-        return $this->extractor->extract($response);
+        return $response;
     }
 
 }
